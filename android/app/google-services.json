@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "657079154801",
+    "project_id": "jynx-86418",
+    "storage_bucket": "jynx-86418.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657079154801:android:0d79035bb5374154bf03d0",
+        "android_client_info": {
+          "package_name": "com.jynxdj.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "657079154801-742enjccif6reji7mc5vv7a3ggcdu6g9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNB1iNQfbuXSMeptndu1VN-ZDQtyVllqc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "657079154801-742enjccif6reji7mc5vv7a3ggcdu6g9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
