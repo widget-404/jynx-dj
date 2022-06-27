@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../ip.dart' as ip;
 
 
 
@@ -14,9 +15,9 @@ class ContractService {
     //   "rider_id": riderID
     // };
     final response = await http.get(
-      Uri.parse("http://kaspar.eastus.cloudapp.azure.com/jynx_club/api/dj_agreement"),
+      Uri.parse("${ip.testIP}/dj_agreement"),
     );
-    print("I am receiving Response of URL http://kaspar.eastus.cloudapp.azure.com/jynx_club/api/dj_agreement ${response.body} ");
+    print("I am receiving Response of Agreement Api ${response.body} ");
     print("Status Code ${response.statusCode}");
     
     if (response.statusCode == 200) {
@@ -43,7 +44,7 @@ class ContractService {
       "agreement_status" : "1"
     };
     final response = await http.post(
-      Uri.parse("http://kaspar.eastus.cloudapp.azure.com/jynx_club/api/dj_agreement_status_on"),
+      Uri.parse("${ip.testIP}/dj_agreement_status_on"),
       body: jsonEncode(jsonMap)
     );
     print("I am receiving Response of Agreement Accept Api =>  ${response.body} ");

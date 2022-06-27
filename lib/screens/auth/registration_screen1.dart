@@ -1,3 +1,5 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -99,7 +101,7 @@ class _RegistrationScreen1State extends State<RegistrationScreen1> {
                       SizedBox(
                         height: size.height*0.02,
                       ),
-                      CustomizeTextField(controller: phoneController, hintText: "Phone"),
+                      CustomizeTextField(controller: phoneController, hintText: "3157553001"),
                       SizedBox(
                         height: size.height*0.02,
                       ),
@@ -119,7 +121,7 @@ class _RegistrationScreen1State extends State<RegistrationScreen1> {
                         padding:  EdgeInsets.only(left: size.width*0.13),
                         child: CustomizeButton(onpress: (){
 
-                          if ( !_validator())
+                          if ( !_validator(size))
                           {
                             return ; 
                           }
@@ -176,72 +178,83 @@ class _RegistrationScreen1State extends State<RegistrationScreen1> {
       );
   }
 
-  bool _validator() {
+  bool _validator(Size size) {
     if (firstNameController.text.trim().isEmpty ||
         firstNameController.text.trim() == "") {
-      Get.snackbar("First Name Error", "Please Enter Your First Name, it cannot be empty",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+          error("Please Enter Your First Name", size);
       return false;
     }
     if (lastNameController.text.trim().isEmpty ||
         lastNameController.text.trim() == "") {
-      Get.snackbar("Last Name Error", "Please Enter Your Last Name, it cannot be empty",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+          error("Please Enter Your Last Name", size);
       return false;
     }
 
     if (phoneController.text.trim().isEmpty ||
         phoneController.text.trim() == "") {
-      Get.snackbar("Phone Number Error", "Please Enter Your Phone Number, it cannot be empty",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+          error("Please Enter Your Phone Number", size);
       return false;
     }
 
     if (emailController.text.trim().isEmpty ||
         emailController.text.trim() == "") {
-      Get.snackbar("Email Error", "Please Enter Your Email Address, it cannot be empty",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+          error("Please Enter Your Email Address", size);
       return false;
     }
+
+    if(EmailValidator.validate(emailController.text.trim()) == false)
+        {
+          error("Invalid Email, Provided Email is not Valid", size);
+          return false;        
+        }
 
     
     if (passwordController.text.trim().isEmpty ||
         emailController.text.trim() == "") {
-      Get.snackbar("Password Error", "Please Enter Password, it cannot be empty",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+      error("Please Enter Password, it cannot be empty", size);
       return false;
     }
 
     
     if (repasswordController.text.trim().isEmpty ||
         repasswordController.text.trim() == "") {
-      Get.snackbar("Re Enter Password Error", "Please Re Enter Password, it cannot be empty",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+        error("Please Enter Confirm Password, it cannot be empty", size);  
       return false;
     }
 
     if (passwordController.text.trim() != repasswordController.text.trim())
     {
-      Get.snackbar("Password Not Match", "Password and Re Enter Password are not matched",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+      error("Password and Re Enter Password are not matched", size);
       return false;
     }
 
     return true;
+  }
+
+  error (String discription, Size size) {
+    return AwesomeDialog(
+      context: context,
+      headerAnimationLoop: false,
+      dialogType: DialogType.ERROR,
+      showCloseIcon: true,
+      animType: AnimType.BOTTOMSLIDE,
+      body: Container(
+        width: size.width,
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+        child: Column(
+          children: [
+            Text(discription,
+            style: GoogleFonts.montserrat().copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black
+            ),
+            ),
+          ],
+        ),
+      )
+       
+      ).show();
   }
 
 }

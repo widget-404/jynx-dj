@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jynx_dj/screens/events/event_screen.dart';
 import 'package:jynx_dj/screens/gallery/gallery_screen.dart';
@@ -19,6 +20,7 @@ class EventSelectionScreen extends StatefulWidget {
   String eventMonth;
   String startTime;
   String endTime;
+  String status;
   EventSelectionScreen({
     required this.eventDate,
     required this.eventName,
@@ -27,7 +29,8 @@ class EventSelectionScreen extends StatefulWidget {
     required this.djid,
     required this.startTime,
     required this.endTime,
-    required this.eventMonth
+    required this.eventMonth,
+    required this.status
   });
 
   @override
@@ -37,6 +40,20 @@ class EventSelectionScreen extends StatefulWidget {
 class _EventSelectionScreenState extends State<EventSelectionScreen> {
 
   bool loadData = false;
+  String qrCodeValue = "";
+
+  @override
+  void initState() {
+   
+    super.initState();
+    if (widget.status == "1")
+    {
+      setState(() {
+        loadData = true;
+      });
+      getQrCodeValue();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -144,9 +161,28 @@ class _EventSelectionScreenState extends State<EventSelectionScreen> {
             SizedBox(
               height: size.height*0.05,
             ),
-            Center(child: CustomizeButton(onpress: (){
+            Center(
+              child: widget.status == "0" ? CustomizeButton(onpress: (){
               acceptEvent(widget.djid, widget.eventid);
-            }, title: "Accept"),
+            }, title: "Accept")
+            : CustomizeButton(onpress: (){
+              showDialog(context: context, builder: (context){
+                return StatefulBuilder(builder: ((context, setState) {
+                  return Dialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12)
+                    ),
+                    child: QrImage(
+                      data: qrCodeValue,
+                      padding: const EdgeInsets.all(20),
+                      backgroundColor: Colors.white,
+
+                    ),
+                  );  
+                }),
+                );
+              });
+            }, title: "Generate Qr"),
             ),
             SizedBox(
               height: size.width*0.04,
@@ -229,5 +265,23 @@ class _EventSelectionScreenState extends State<EventSelectionScreen> {
     });
 
   }
+
+   getQrCodeValue () async{
+    var result = await EventService().bookingID(widget.djid, widget.eventid);
+    if (result != "error")
+    {
+      setState(() {
+        qrCodeValue = result;
+        loadData = false;
+      });
+    }
+    else {
+      setState(() {
+        loadData = false;
+      });
+    }
+   }
+
+
 
 }

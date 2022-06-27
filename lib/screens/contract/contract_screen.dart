@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -87,7 +88,7 @@ class _ContractScreenState extends State<ContractScreen> {
                       //      backgroundColor: const Color(0xFF6BEAEC),
                       //     duration: const Duration(seconds: 3) );
                       //Get.to(const EventScreen());
-                      acceptContract();
+                      acceptContract(size);
                     }, 
                     title: "I Agree"),
                   )
@@ -112,7 +113,7 @@ class _ContractScreenState extends State<ContractScreen> {
     });
   }
 
-  void acceptContract () async{
+  void acceptContract (Size size) async{
     setState(() {
       loadData = true;
     });
@@ -120,10 +121,7 @@ class _ContractScreenState extends State<ContractScreen> {
     var result = await ContractService().acceptContract(prefs.getString('user_id').toString());
     if (result == "error")
     {
-      Get.snackbar("Error", "Error occured while accepting the Agreement, please try again",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+      error("Error occured while accepting the Agreement, please try again", size);
       setState(() {
         loadData = false;
       });
@@ -135,6 +133,33 @@ class _ContractScreenState extends State<ContractScreen> {
         loadData = false;
       });
     }
+  }
+
+  
+  error (String discription, Size size) {
+    return AwesomeDialog(
+      context: context,
+      headerAnimationLoop: false,
+      dialogType: DialogType.ERROR,
+      showCloseIcon: true,
+      animType: AnimType.BOTTOMSLIDE,
+      body: Container(
+        width: size.width,
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+        child: Column(
+          children: [
+            Text(discription,
+            style: GoogleFonts.montserrat().copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black
+            ),
+            ),
+          ],
+        ),
+      )
+       
+      ).show();
   }
 
 }

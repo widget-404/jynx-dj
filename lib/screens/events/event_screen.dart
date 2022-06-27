@@ -5,8 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jynx_dj/modal/eventModel.dart';
+import 'package:jynx_dj/modal/notification_model.dart';
 import 'package:jynx_dj/screens/contract/contract_screen.dart';
 import 'package:jynx_dj/screens/gallery/gallery_screen.dart';
+import 'package:jynx_dj/screens/notifications/notification_screen.dart';
 import 'package:jynx_dj/services/contract_service.dart';
 import 'package:jynx_dj/services/device_id_service.dart';
 import 'package:jynx_dj/services/event_service.dart';
@@ -26,6 +28,7 @@ class _EventScreenState extends State<EventScreen> {
   bool loadData = false;
   List<EventModel> eventList = [];
   String djID = "";
+  List<NotificationModel> notificationList = [];
   String _playerid = "";
   bool noData = false; 
 
@@ -52,11 +55,21 @@ class _EventScreenState extends State<EventScreen> {
           ),
           ),
           actions: [
-            Padding(
-              padding:  EdgeInsets.only(right: size.width*0.05),
-              child: SvgPicture.asset("images/profile.svg",
-              height: size.height*0.05,),
-            )
+            // Padding(
+            //   padding:  EdgeInsets.only(right: size.width*0.05),
+            //   child: SvgPicture.asset("images/profile.svg",
+            //   height: size.height*0.05,),
+            // ),
+            GestureDetector(
+              onTap: (){
+                Get.to(const NotificationScreen());
+              },
+              child: Padding(
+                padding: EdgeInsets.only(right: size.width*0.05),
+                child: const Icon(Icons.notifications,
+                color: Colors.white,),
+              ),
+            ),
           ],
         ),
         drawer: const UserDrawer(),
@@ -167,6 +180,7 @@ class _EventScreenState extends State<EventScreen> {
     await registerDevice();
     await checkAgreementStatus(djID);
     await getEventLists(djID);
+    await notificaitonList("1");
     }
   }
 
@@ -193,6 +207,14 @@ class _EventScreenState extends State<EventScreen> {
     }
     }
     
+  }
+
+  notificaitonList (String djID) async{
+    var result = await EventService().notification(djID);
+    setState(() {
+      notificationList = result;
+      print("Length of the notificaiton List ${notificationList.length}");
+    });
   }
 
   checkAgreementStatus (String djID) async{

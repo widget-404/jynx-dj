@@ -117,6 +117,7 @@ class _EventCardState extends State<EventCard> {
                               Get.to(EventSelectionScreen(
                                 eventDate: widget.eventDate,
                                 djid: widget.djid,
+                                status: widget.djStatus,
                                 eventid: widget.eventid,
                                  eventName: widget.eventName,
                                   imageUrl: widget.imageUrl,

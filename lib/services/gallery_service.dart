@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:jynx_dj/modal/eventModel.dart';
 import 'package:jynx_dj/modal/gallery_image_model.dart';
+import '../ip.dart' as ip;
 
 
 
@@ -15,7 +16,7 @@ class GalleryService {
       "id": djid
     };
     final response = await http.post(
-      Uri.parse("http://kaspar.eastus.cloudapp.azure.com/jynx_club/api/gallery_event_list"),
+      Uri.parse("${ip.testIP}/gallery_event_list"),
       body: jsonEncode(jsonMap)
     );
     print("I am receiving response of Gallery  Event List Api => ${response.body} ");
@@ -44,7 +45,7 @@ class GalleryService {
       "event_id": eventid
     };
     final response = await http.post(
-      Uri.parse("http://kaspar.eastus.cloudapp.azure.com/jynx_club/api/gallery_event_images"),
+      Uri.parse("${ip.testIP}/gallery_event_images"),
       body: jsonEncode(jsonMap)
     );
     print("I am receiving response of Gallery  Event Images Api => ${response.body} ");

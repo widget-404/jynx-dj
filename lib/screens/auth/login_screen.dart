@@ -1,7 +1,10 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jynx_dj/screens/auth/forgot_password/reset_option_screen.dart';
 import 'package:jynx_dj/screens/auth/registration_screen1.dart';
 import 'package:jynx_dj/screens/events/event_screen.dart';
 import 'package:jynx_dj/screens/welcome_screen.dart';
@@ -96,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomizeTextField(controller: passwordController, hintText: "Password"),
                   GestureDetector(
                     onTap: (){
-                      // Forgot Password Functionality
+                      Get.to(const ResetOptionScreen());
                     },
                     child: Padding(
                       padding:  EdgeInsets.only(left: size.width*0.5,top: size.height*0.01),
@@ -115,12 +118,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding:  EdgeInsets.only(left: size.width*0.13),
                     child: CustomizeButton(onpress: (){
 
-                      if (! _validator())
+                      if (! _validator(size))
                       {
                         return ; 
                       }
 
-                      loginUser();
+                      loginUser(size);
 
 
 
@@ -161,29 +164,59 @@ class _LoginScreenState extends State<LoginScreen> {
       );
   }
 
+  
+  error (String discription, Size size) {
+    return AwesomeDialog(
+      context: context,
+      headerAnimationLoop: false,
+      dialogType: DialogType.ERROR,
+      showCloseIcon: true,
+      animType: AnimType.BOTTOMSLIDE,
+      body: Container(
+        width: size.width,
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+        child: Column(
+          children: [
+            Text(discription,
+            style: GoogleFonts.montserrat().copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black
+            ),
+            ),
+          ],
+        ),
+      )
+       
+      ).show();
+  }
 
-bool _validator() {
+
+
+
+
+bool _validator(Size size) {
     if (emailController.text.trim().isEmpty ||
         emailController.text.trim() == "") {
-      Get.snackbar("Emaill / Phone Number Error", "Please Provie Email / Phone Number",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+          error("Please Provie Email / Phone Number", size);
       return false;
     }
+    
+    // if(EmailValidator.validate(emailController.text.trim()) == false)
+    //     {
+    //       error("Invalid Email, Provided Email is not Valid", size);
+    //       return false;        
+    //     }
     if (passwordController.text.trim().isEmpty ||
         passwordController.text.trim() == "") {
-      Get.snackbar("Password Error", "Please Enter Your Password",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+          error("Please Enter Your Password", size);
       return false;
     }
 
     return true;
     }
 
-    void loginUser () async{
+    void loginUser (Size size) async{
       setState(() {
         loadData = true;
       });
@@ -194,10 +227,6 @@ bool _validator() {
       });
       if (result != "0")
       {
-        Get.snackbar("Login SuccessFull", "Have a great experience",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
       //SharedPreference
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_id', result);
@@ -205,12 +234,11 @@ bool _validator() {
       Get.offAll(const EventScreen());
       }
       else {
-        Get.snackbar("Error while login", "Given does not match with any user",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+        error("Error while login, Given does not match with any user", size);
       }
     }
+
+    
     
 
 

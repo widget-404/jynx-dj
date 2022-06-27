@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import '../ip.dart' as ip;
 
 
 
@@ -16,7 +17,7 @@ class DeviceidService {
     };
     
     final response = await http.post(
-      Uri.parse("http://kaspar.eastus.cloudapp.azure.com/jynx_club/api/register_device"),
+      Uri.parse("${ip.testIP}/register_device"),
       body: jsonEncode(jsonMap)
     );
     print("I am receiving Response of Register Device Api => ${response.body} ");

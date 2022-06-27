@@ -1,10 +1,15 @@
 // ignore_for_file: must_be_immutable, use_key_in_widget_constructors, avoid_print
 
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:jynx_dj/controllers/registration_controller.dart';
 import 'package:jynx_dj/modal/musicGenreModal.dart';
+import 'package:jynx_dj/screens/auth/email_verification_screen.dart';
+import 'package:jynx_dj/screens/auth/phone_verification_screen.dart';
 import 'package:jynx_dj/screens/auth/registration_screen1.dart';
 import 'package:jynx_dj/screens/contract/contract_screen.dart';
 import 'package:jynx_dj/services/auth_service.dart';
@@ -36,10 +41,16 @@ class RegistrationScreen2 extends StatefulWidget {
 class _RegistrationScreen2State extends State<RegistrationScreen2> {
 
   String? musicGenre;
+  
+  String verificationCode = "";
+  
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   List<MusicGenreModal> musicGenres =[];
   List<String> genderSelection = ['Male','Female'];
   String? gender;
+  bool phoneVerified = false;
   bool loadData = false;
+  RegistationController registrationCOntroller = Get.put(RegistationController());
 
   @override
   void initState() {
@@ -204,11 +215,13 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
               Padding(
                 padding:  EdgeInsets.only(left: size.width*0.13),
                 child: CustomizeButton(onpress: (){
-                  if (!_validator())
+                  if (!_validator(size))
                   {
                     return;
                   }
-                  registerUser();
+                  checkEmail(size);
+                  //loginUser(widget.phoneNumber, context);
+                  //registerUser(size);
                 }, title: "Submit"),
               )
                       
@@ -221,7 +234,7 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
       );
   }
 
-  void registerUser () async{
+  void registerUser (Size size) async{
     setState(() {
       loadData = true;
     });
@@ -239,23 +252,13 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
          });
       if (result == "0")
       {
-        Get.snackbar("Registration Error", "Error Occured while registration, please try again",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+        error("Error Occured while registration, please try again", size);
       } 
       else if (result == "-1")
       {
-        Get.snackbar("Email Exit", "Account against given Email has already exist",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+        error("Account against given Email has already exist", size);
       }
       else {
-         Get.snackbar("Registration Successfull", "Registration has completed, have a great experience",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
       // SharedPreference
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('user_id', result);
@@ -264,23 +267,74 @@ class _RegistrationScreen2State extends State<RegistrationScreen2> {
       }
   }
 
-bool _validator() {
+bool _validator(Size size) {
     if (!(musicGenre != null)) {
-      Get.snackbar("Music Genre Error", "Please Select Music Genre",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+      error("Please Select Music Genre", size);
       return false;
     }
     if (!(gender != null)) {
-      Get.snackbar("Gender Error", "Please Select Your Gender",
-      snackPosition: SnackPosition.BOTTOM,
-      backgroundColor: const Color(0xFF6BEAEC),
-      duration: const Duration(seconds: 3) );
+      error("Please Select Your Gender", size);
       return false;
     }
 
     return true;
+  }
+
+  error (String discription, Size size) {
+    return AwesomeDialog(
+      context: context,
+      headerAnimationLoop: false,
+      dialogType: DialogType.ERROR,
+      showCloseIcon: true,
+      animType: AnimType.BOTTOMSLIDE,
+      body: Container(
+        width: size.width,
+        padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+        child: Column(
+          children: [
+            Text(discription,
+            style: GoogleFonts.montserrat().copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black
+            ),
+            ),
+          ],
+        ),
+      )
+       
+      ).show();
+  }
+
+  
+
+  checkEmail (Size size) async{
+    setState(() {
+      loadData = true;
+    });
+    var result = await AuthServices().verifyEmail(widget.emailAddress);
+    if (result == "0")
+    {
+      error("Email Already Exists, please Provide another email address", size);
+    }
+    else {
+      print("Else statement ${result}");
+      Get.to(EmialVerificationScreen(
+                    firstName: widget.firstName,
+                    lastName: widget.lastName,
+                    confirmPassword: widget.confirmPassword,
+                    emailAddress: widget.emailAddress,
+                    gender: gender.toString(),
+                    genre: musicGenre.toString(),
+                    password: widget.password,
+                    phoneNumber: widget.phoneNumber,
+                    verificationCode: result,
+                    ),
+                    );
+    }
+    setState(() {
+      loadData = false;
+    });
   }
 
 }

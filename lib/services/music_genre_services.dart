@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:jynx_dj/modal/musicGenreModal.dart';
+import '../ip.dart' as ip;
 
 
 
@@ -14,9 +15,9 @@ class MusicGenreServices {
     //   "rider_id": riderID
     // };
     final response = await http.get(
-      Uri.parse("http://kaspar.eastus.cloudapp.azure.com/jynx_club/api/music_genre"),
+      Uri.parse("${ip.testIP}/music_genre"),
     );
-    print("I am receiving Response of URL http://kaspar.eastus.cloudapp.azure.com/jynx_club/api/music_genre ${response.body} ");
+    print("I am receiving Response of Music Genre Api ${response.body} ");
     if (response.statusCode == 200) {
       var responseMusicGenre = jsonDecode(response.body);
       if(responseMusicGenre['status'] == 0 )

@@ -18,6 +18,7 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   wave: ^0.2.0
+  email_validator: ^2.0.1
   get: ^4.6.5
   flutter_svg: ^1.0.0
   google_fonts: ^2.1.0
@@ -25,6 +26,13 @@ dependencies:
   image_downloader: ^0.31.0
   onesignal_flutter: ^3.0.0
   share_plus: ^4.0.8
+  pinput: ^2.2.4
+  email_auth: ^1.0.0
+  qr_flutter: ^4.0.0
+  
+  firebase_auth: ^3.1.0
+  firebase_core: ^1.6.0
+  cloud_firestore: ^2.5.1
   awesome_dialog: ^2.2.1
 
 dev_dependencies:
