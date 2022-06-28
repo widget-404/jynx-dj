@@ -62,7 +62,9 @@ class _EventScreenState extends State<EventScreen> {
             // ),
             GestureDetector(
               onTap: (){
-                Get.to(const NotificationScreen());
+                Get.to(NotificationScreen(
+                  notificationListss: notificationList
+                ));
               },
               child: Padding(
                 padding: EdgeInsets.only(right: size.width*0.05),

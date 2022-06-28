@@ -104,12 +104,38 @@ class EventService {
     body: jsonEncode(jsonMap)
     );
     
-    print("I am receiving response of Booking ID Api => ${response.body} ");
+    print("I am receiving response of Notification List Api => ${response.body} ");
     if (response.statusCode == 200)
     {
       var responseNotificationList = jsonDecode(response.body);
       return  List<NotificationModel>.from(responseNotificationList['Notification List'].map(
         (genres) => NotificationModel.fromJson(genres)
+      )
+      );
+    }
+    else {
+      return [];
+    }
+
+  }
+
+  Future<List<EventModel>> singleNotification (String djid, String eventid) async{
+    Map<String,dynamic> jsonMap = <String, dynamic>
+    {
+      "dj_id": djid,
+      "event_id": eventid
+      
+    };
+    final response = await http.post(Uri.parse("${ip.testIP}/one_event"),
+    body: jsonEncode(jsonMap)
+    );
+    
+    print("I am receiving response of Single Event  Api => ${response.body} ");
+    if (response.statusCode == 200)
+    {
+      var responseNotificationList = jsonDecode(response.body);
+      return  List<EventModel>.from(responseNotificationList['event_list'].map(
+        (genres) => EventModel.fromJson(genres)
       )
       );
     }
