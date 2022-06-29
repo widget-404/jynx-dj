@@ -33,6 +33,6 @@ jobs:
         with:
           flutter-version: '2.10.4'
       - run: flutter pub get
-      - run: flutter test
+
       - run: flutter build apk
 
