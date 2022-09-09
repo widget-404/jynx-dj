@@ -49,7 +49,9 @@ class _MyAppState extends State<MyApp> {
     return     GetMaterialApp(
       debugShowCheckedModeBanner: false, 
       title: "JYNX DJ",
-      home: login == "true" ? const EventScreen() : const OnBoardingScreen(),
+      home:
+
+      login == "true" ? const EventScreen() : const OnBoardingScreen(),
     );
   }
 }

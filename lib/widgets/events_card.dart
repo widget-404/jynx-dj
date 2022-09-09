@@ -15,6 +15,7 @@ class EventCard extends StatefulWidget {
   String startTime;
   String endTime;
   String eventMonth;
+  String qrCodeStatus;
 
   EventCard({
     required this.imageUrl,
@@ -25,7 +26,8 @@ class EventCard extends StatefulWidget {
     required this.djid,
     required this.startTime,
     required this.endTime,
-    required this.eventMonth
+    required this.eventMonth,
+    required this.qrCodeStatus
   });
 
   @override
@@ -40,8 +42,8 @@ class _EventCardState extends State<EventCard> {
       width: size.width*0.5,
       height: size.height*0.35,
       decoration:  BoxDecoration(
-        color: const Color(0xFF143B66),
-        borderRadius: BorderRadius.circular(32)
+          color: const Color(0xFF143B66),
+          borderRadius: BorderRadius.circular(32)
       ),
       child: Column(
         children: [
@@ -54,11 +56,11 @@ class _EventCardState extends State<EventCard> {
             ),
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(16),
-                topRight: Radius.circular(16)
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16)
               ),
               child: Image.network(widget.imageUrl,
-              fit: BoxFit.fill,),
+                fit: BoxFit.fill,),
             ),
           ),
           Container(
@@ -73,26 +75,26 @@ class _EventCardState extends State<EventCard> {
                     height: size.height*0.075,
                     width: size.width*0.12,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFF46060),
-                      borderRadius: BorderRadius.circular(12)
+                        color: const Color(0xFFF46060),
+                        borderRadius: BorderRadius.circular(12)
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(widget.eventDate,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat().copyWith(color: Colors.white)),
-                        
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat().copyWith(color: Colors.white)),
+
                         Text(widget.eventMonth,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.montserrat().copyWith(color: Colors.white)),
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.montserrat().copyWith(color: Colors.white)),
                       ],
                     ),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: size.width*0.02,
-                  top: size.width*0.02),
+                      top: size.width*0.02),
                   child: Container(
                     width: size.width*0.23,
                     height: size.height*0.1,
@@ -100,12 +102,12 @@ class _EventCardState extends State<EventCard> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(widget.eventName,
-                        textAlign: TextAlign.start,
-                        style: GoogleFonts.montserrat().copyWith(
-                          color: Colors.white,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold
-                        ),
+                          textAlign: TextAlign.start,
+                          style: GoogleFonts.montserrat().copyWith(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold
+                          ),
                         ),
                         SizedBox(
                           height: size.width*0.01,
@@ -119,37 +121,56 @@ class _EventCardState extends State<EventCard> {
                                 djid: widget.djid,
                                 status: widget.djStatus,
                                 eventid: widget.eventid,
-                                 eventName: widget.eventName,
-                                  imageUrl: widget.imageUrl,
-                                  startTime: widget.startTime,
-                                  eventMonth: widget.eventMonth,
-                                  endTime: widget.endTime,),
-                                  );
+                                eventName: widget.eventName,
+                                imageUrl: widget.imageUrl,
+                                startTime: widget.startTime,
+                                eventMonth: widget.eventMonth,
+                                endTime: widget.endTime,),
+                              );
                             },
                             child: Container(
                               height: size.height*0.03,
                               width: size.width*0.23,
                               decoration: BoxDecoration(
-                                color: widget.djStatus == "1"  ? const Color(0xFF6BEAEC) : const Color(0xFFF46060),
-                                borderRadius: BorderRadius.circular(32)
+                                  color: widget.djStatus == "1"  ? const Color(0xFFF46060) : const Color(0xFF6BEAEC),
+                                  borderRadius: BorderRadius.circular(32)
                               ),
-                              child: widget.djStatus == "1" ? Center(
-                                child: Text("Going",
-                                style: GoogleFonts.montserrat().copyWith(
-                                  color: Colors.white,
-                                  fontSize: 11.5
-                                ),
-                                )
+                              child: widget.djStatus == "1"  ?
+                              widget.qrCodeStatus == "1" || widget.qrCodeStatus == "2" ?
+                              widget.qrCodeStatus == "1" ?
+                              Center(
+                                  child: Text("Enter",
+                                    style: GoogleFonts.montserrat().copyWith(
+                                        color: Colors.white,
+                                        fontSize: 11.5
+                                    ),
+                                  )
+                              ) :
+                              Center(
+                                  child: Text("Exit",
+                                    style: GoogleFonts.montserrat().copyWith(
+                                        color: Colors.white,
+                                        fontSize: 11.5
+                                    ),
+                                  )
                               )
-                              :  Row(
+                                  :Center(
+                                  child: Text("Going",
+                                    style: GoogleFonts.montserrat().copyWith(
+                                        color: Colors.white,
+                                        fontSize: 11.5
+                                    ),
+                                  )
+                              )
+                                  :  Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text("Going",
-                                  style: GoogleFonts.montserrat().copyWith(
-                                    color: Colors.white,
-                                    fontSize: 11.5
-                                  ),
-                                  
+                                    style: GoogleFonts.montserrat().copyWith(
+                                        color: Colors.white,
+                                        fontSize: 11.5
+                                    ),
+
                                   ),
                                   SizedBox(
                                     width: size.width*0.01,
@@ -159,7 +180,7 @@ class _EventCardState extends State<EventCard> {
                               ),
                             ),
                           ),
-                          
+
                         )
                       ],
                     ),

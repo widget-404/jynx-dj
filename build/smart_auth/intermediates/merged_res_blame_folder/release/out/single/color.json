@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/Users/apple/StudioProjects/JYNX-DJ/build/smart_auth/intermediates/res/merged/release/color/common_google_signin_btn_text_light.xml",
+        "source": "/Users/apple/.gradle/caches/transforms-2/files-2.1/4805248821c2b42010c4bf471d3b789a/jetified-play-services-base-18.0.1/res/color/common_google_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/Users/apple/StudioProjects/JYNX-DJ/build/smart_auth/intermediates/res/merged/release/color/common_google_signin_btn_text_dark.xml",
+        "source": "/Users/apple/.gradle/caches/transforms-2/files-2.1/4805248821c2b42010c4bf471d3b789a/jetified-play-services-base-18.0.1/res/color/common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/Users/apple/StudioProjects/JYNX-DJ/build/smart_auth/intermediates/res/merged/release/color/common_google_signin_btn_tint.xml",
+        "source": "/Users/apple/.gradle/caches/transforms-2/files-2.1/4805248821c2b42010c4bf471d3b789a/jetified-play-services-base-18.0.1/res/color/common_google_signin_btn_tint.xml"
+    }
+]

@@ -13,8 +13,9 @@ class EventModel {
         required this.startTime,
         required this.endTime,
         required this.eventMonth,
+        required this.qrCodeStatus
 
-        
+
     });
 
     String id;
@@ -29,7 +30,8 @@ class EventModel {
     String eventDate;
     String startTime;
     String endTime;
-   
+    String qrCodeStatus;
+
 
     factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
         name: json['event_name'].toString(),
@@ -43,7 +45,8 @@ class EventModel {
         eventMonth: json['event_date_month'].toString(),
         imageURL: json['image_url'].toString(),
         startTime: json['event_start_time'].toString(),
-        endTime: json['event_end_time'].toString()
+        endTime: json['event_end_time'].toString(),
+        qrCodeStatus: json['dj_qr_code_status'].toString(),
     );
 }
 

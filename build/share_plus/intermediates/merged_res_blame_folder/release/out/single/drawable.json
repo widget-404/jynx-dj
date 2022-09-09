@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/apple/StudioProjects/JYNX-DJ/build/share_plus/intermediates/res/merged/release/drawable/notification_bg_low.xml",
+        "source": "/Users/apple/.gradle/caches/transforms-2/files-2.1/1509b3f496362545b96e9906a3b67ed1/core-1.7.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Users/apple/StudioProjects/JYNX-DJ/build/share_plus/intermediates/res/merged/release/drawable/notification_tile_bg.xml",
+        "source": "/Users/apple/.gradle/caches/transforms-2/files-2.1/1509b3f496362545b96e9906a3b67ed1/core-1.7.0/res/drawable/notification_tile_bg.xml"
+    },
+    {
+        "merged": "/Users/apple/StudioProjects/JYNX-DJ/build/share_plus/intermediates/res/merged/release/drawable/notification_icon_background.xml",
+        "source": "/Users/apple/.gradle/caches/transforms-2/files-2.1/1509b3f496362545b96e9906a3b67ed1/core-1.7.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/Users/apple/StudioProjects/JYNX-DJ/build/share_plus/intermediates/res/merged/release/drawable/notification_bg.xml",
+        "source": "/Users/apple/.gradle/caches/transforms-2/files-2.1/1509b3f496362545b96e9906a3b67ed1/core-1.7.0/res/drawable/notification_bg.xml"
+    }
+]

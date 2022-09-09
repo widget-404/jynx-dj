@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jynx_dj/screens/events/event_selection_screen.dart';
 import 'package:jynx_dj/screens/gallery/gallery_single_event_screen.dart';
+
 class GalleryEventCard extends StatefulWidget {
   String imageUrl;
   String eventDate;
@@ -18,18 +19,17 @@ class GalleryEventCard extends StatefulWidget {
   String endTime;
   String imageMainUrl;
 
-  GalleryEventCard({
-    required this.imageUrl,
-    required this.eventName,
-    required this.eventDate,
-    required this.djStatus,
-    required this.eventid,
-    required this.djid,
-    required this.eventMonth,
-    required this.startTime,
-    required this.endTime,
-    required this.imageMainUrl
-  });
+  GalleryEventCard(
+      {required this.imageUrl,
+      required this.eventName,
+      required this.eventDate,
+      required this.djStatus,
+      required this.eventid,
+      required this.djid,
+      required this.eventMonth,
+      required this.startTime,
+      required this.endTime,
+      required this.imageMainUrl});
 
   @override
   State<GalleryEventCard> createState() => _GalleryEventCardState();
@@ -40,135 +40,130 @@ class _GalleryEventCardState extends State<GalleryEventCard> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
-      onTap: (){
-        Get.to( GallerySingleEventScreen(
-          djID: widget.djid,
-          eventID: widget.eventid,
-          eventName: widget.eventName,
-          eventDate: widget.eventDate,
-          eventMonth: widget.eventMonth,
-          imageBaseUrl: widget.imageMainUrl,
-          goingStatus: widget.djStatus,
-        ));
+      onTap: () {
+        Get.to(
+          GallerySingleEventScreen(
+            djID: widget.djid,
+            eventID: widget.eventid,
+            eventName: widget.eventName,
+            eventDate: widget.eventDate,
+            eventMonth: widget.eventMonth,
+            imageBaseUrl: widget.imageMainUrl,
+            goingStatus: widget.djStatus,
+          ),
+        );
       },
       child: Container(
-        width: size.width*0.5,
-        height: size.height*0.35,
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: const Color(0xFF143B66),
-          borderRadius: BorderRadius.circular(32)
+          borderRadius: BorderRadius.circular(32),
         ),
         child: Column(
           children: [
             Container(
-              height: size.height*0.16,
-                width: size.width*0.5,
+              height: size.height * 0.16,
+              width: size.width * 0.5,
               child: Stack(
                 children: [
                   Positioned(
                     //top: 0.0,
                     child: Container(
-                      height: size.height*0.16,
-                      width: size.width*0.5,
+                      height: size.height * 0.16,
+                      width: size.width * 0.5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12.0),
                         //color: Colors.red
                       ),
                       child: ClipRRect(
                         borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16)
+                            topLeft: Radius.circular(16),
+                            topRight: Radius.circular(16)),
+                        child: Image.network(
+                          widget.imageUrl,
+                          fit: BoxFit.fill,
                         ),
-                        child: Image.network(widget.imageUrl,
-                        fit: BoxFit.fill,),
                       ),
                     ),
                   ),
-                  widget.djStatus == "1" ? Positioned(
-                    bottom: 0.0,
-                    right: 0.0,
-                    child: Container(
-                      height: size.height*0.04,
-                      width: size.width*0.2,
-                      decoration: const BoxDecoration(
-                        color:  Color(0xFFF46060),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(16),
-                          bottomLeft: Radius.circular(12)
-                        ),
-                        
-                      ),
-                      child: Center(
-                        child: Text("Attended",
-                        style: GoogleFonts.montserrat().copyWith(
-                          color: Colors.white,
-                          fontSize: 11
-                        ),
-                        ),
-                      ),
-                    )
-                  )
-                  : Container(),
+                  widget.djStatus == "1"
+                      ? Positioned(
+                          bottom: 0.0,
+                          right: 0.0,
+                          child: Container(
+                            height: size.height * 0.04,
+                            width: size.width * 0.2,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFFF46060),
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(16),
+                                  bottomLeft: Radius.circular(12)),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Attended",
+                                style: GoogleFonts.montserrat().copyWith(
+                                    color: Colors.white, fontSize: 11),
+                              ),
+                            ),
+                          ))
+                      : Container(),
                 ],
               ),
             ),
-            Container(
-              height: size.height*0.1,
-              //scolor: Colors.red,
-              width: size.width*0.5,
-              child: Row(
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding:  EdgeInsets.only(left: size.width*0.05),
-                    child: Container(
-                      height: size.height*0.07,
-                      width: size.width*0.12,
-                      decoration: BoxDecoration(
-                        color:  widget.djStatus == "1" ? const Color(0xFFF46060) : const Color(0xFF6BEAEC),
-                        borderRadius: BorderRadius.circular(12)
+                  Row(
+                    children: [
+                      Container(
+                        width: size.width * 0.12,
+                        margin: EdgeInsets.only(left: size.width * 0.05),
+                        decoration: BoxDecoration(
+                          color: widget.djStatus == "1"
+                              ? const Color(0xFFF46060)
+                              : const Color(0xFF6BEAEC),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          children: [
+                            Text(
+                              widget.eventDate,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.montserrat().copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              widget.eventMonth,
+                              //textAlign: TextAlign.center,
+                              style: GoogleFonts.montserrat().copyWith(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(widget.eventDate,
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.montserrat().copyWith(color: Colors.white),
-                          ),
-                          Text(widget.eventMonth,
-                      //textAlign: TextAlign.center,
-                      style: GoogleFonts.montserrat().copyWith(color: Colors.white),
-                      ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: size.width*0.04,
-                    top: size.width*0.03),
-                    child: Container(
-                      width: size.width*0.22,
-                      height: size.height*0.1,
-                      child: Column(
-                        //mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(widget.eventName,
+                      Container(
+                        width: size.width * 0.22,
+                        padding: EdgeInsets.only(
+                          left: size.width * 0.04,
+                        ),
+                        child: Text(
+                          widget.eventName,
                           textAlign: TextAlign.start,
                           style: GoogleFonts.montserrat().copyWith(
                             color: Colors.white,
                             fontSize: 14,
-                            fontWeight: FontWeight.bold
+                            fontWeight: FontWeight.bold,
                           ),
-                          ),
-                          
-                          
-                        ],
-                      ),
-                    ),
-                  )
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
             )
-    
           ],
         ),
       ),

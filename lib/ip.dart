@@ -12,5 +12,8 @@ final headerJson = {
 // 'Content-Type': 'application/json',
 // 'Content-Type': 'application/json; charset=UTF-8',
 
-final testIP = 'http://kaspar.eastus.cloudapp.azure.com/jynx_club/api';
+final testIP = 'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/api';
+
+// 'http://kaspar.eastus.cloudapp.azure.com/jynx_testing/api';
 //final testIP = "http://kaspar.eastus.cloudapp.azure.com/tiffinbox/rider";
+final prodIP = 'https://jynx.co.za/api';
